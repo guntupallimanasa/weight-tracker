@@ -5,5 +5,6 @@ export default ({isLogin})=>{
     // if (!isLogin) {
     //     return <Redirect to='/login' exact />
     //   }
+    console.log('>>>>>')
     return <div>Im in Dashboard</div>
 }
