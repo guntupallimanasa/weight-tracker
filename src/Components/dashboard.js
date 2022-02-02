@@ -5,8 +5,6 @@ import './style.css';
 
 const Dashboard = ({ settingsUserDataReducer, enteredVAluesReducer }) => {
 
-    console.log(">>settingsUserDataReducer::enteredVAluesReducer", settingsUserDataReducer, enteredVAluesReducer)
-
     return <div>
         {
             settingsUserDataReducer.UDList.map(item => <span>

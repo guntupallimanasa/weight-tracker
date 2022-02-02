@@ -46,6 +46,9 @@ export const Routes=({isLogin})=> {
           <Route path="/settings">
             <Settings isLogin = {isLogin}/>
           </Route>
+          <Route path="/dashboard">
+            <Dashboard isLogin = {isLogin}/>
+          </Route>
           <Route path="/create">
             <Create isLogin = {isLogin}/>
           </Route>

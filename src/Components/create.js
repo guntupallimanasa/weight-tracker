@@ -5,16 +5,8 @@ import { connect } from "react-redux";
 import { Radio, Button } from 'antd';
 import { userInputValues } from '../Actions'
 
-const Create = ({ settingsUserDataReducer, userInputValues }) => {
-  console.log('>>>>>settingsUserDataReducer', settingsUserDataReducer)
-  const [initialValue, setInitialValue] = useState({
-    Weight: 0,
-    BMI: 0,
-    Muscle: 0,
-    VC_Fat: 0,
-    Fat: 0,
-    Age: 0
-  })
+const Create = ({ settingsUserDataReducer, userInputValues, enteredVAluesReducer }) => {
+  const [initialValue, setInitialValue] = useState(enteredVAluesReducer)
 
   const onChangeHandler = (e) => {
     if (e.target.name === "Weight") {
@@ -34,19 +26,32 @@ const Create = ({ settingsUserDataReducer, userInputValues }) => {
   const submitHandler = (evt) => {
     userInputValues(initialValue)
   }
+
+  const cancelHandler = (evt) => {
+  }
   return <div>
     <h2>Create Record</h2>
     {
       settingsUserDataReducer.UIList.map(item => <div>
         {
           item.isChecked ? <div>
-            <span>{`${item.name}`}:</span>
-            <input
-              name={`${item.name}`}
-              style={{ width: '150px', margin: '10px' }}
-              placeholder={`Enter ${item.name}`}
-              onChange={(event) => onChangeHandler(event)}
-            />
+            {
+              Object.keys(enteredVAluesReducer).map((key, i) => <p key={i}>
+                {
+                  item.name === key ? (<div>
+                    <span>{item.name} : </span>
+                    <input
+                      defaultValue={enteredVAluesReducer[item.name]}
+                      autoFocus={true}
+                      onChange={(event) => onChangeHandler(event)}
+                      name={`${item.name}`}
+                      style={{ margin: '10px' }}
+                    />
+                  </div>) : null
+                }
+              </p>
+              )
+            }
           </div>
             : null
         }
@@ -57,12 +62,19 @@ const Create = ({ settingsUserDataReducer, userInputValues }) => {
     <Button type="primary" htmlType="submit" onClick={submitHandler}>
       Save
     </Button>
+    <br />
+    <br />
+
+    <Button type="primary" htmlType="submit" onClick={cancelHandler}>
+      Cancel
+    </Button>
   </div>
 }
 
 const mapStateToProps = state => {
   return {
-    settingsUserDataReducer: state.settingsUserDataReducer
+    settingsUserDataReducer: state.settingsUserDataReducer,
+    enteredVAluesReducer: state.enteredVAluesReducer,
   }
 }
 

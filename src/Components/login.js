@@ -1,16 +1,17 @@
 import React from "react";
-import {checkLogin } from "../Actions";
+import {checkLogin, checkUsername } from "../Actions";
 import { connect } from "react-redux";
 import 'antd/dist/antd.css';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { useState } from 'react'
 import { BrowserRouter as Router, Route, Link,useHistory } from 'react-router-dom';
 
-export const Login= ({ cnt,checkLogin,isLogin  }) => {
+export const Login= ({ cnt,checkLogin,checkUsername,isLogin  }) => {
   let history = useHistory();
 
   const onFinish = (values) => {
     checkLogin(values);
+    checkUsername(values);
     history.push('/home');
   };
 
@@ -94,8 +95,9 @@ export const Login= ({ cnt,checkLogin,isLogin  }) => {
 const mapStateToProps = state => {
   return {
     isLogin: state.LoginReducer
+
   }
 }
 
-const loginContainer = connect(mapStateToProps, {checkLogin})(Login);
+const loginContainer = connect(mapStateToProps, {checkLogin, checkUsername})(Login);
 export default loginContainer;

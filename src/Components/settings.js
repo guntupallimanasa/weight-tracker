@@ -3,26 +3,14 @@ import React from "react";
 import { Radio, Button } from 'antd';
 import { settingsUserData } from "../Actions";
 import { connect } from "react-redux";
+import { BrowserRouter as Router, Route, Link,useHistory } from 'react-router-dom';
 
-const Settings = ({ settingsUserData }) => {
+const Settings = ({ settingsUserData, settingsDataReducer }) => {
+  let history = useHistory();
 
-  const [UIList, setUIList] = React.useState([
-    { name: "Weight",isChecked:true, id:0 },
-    { name: "BMI" ,isChecked:false, id:1},
-    { name: "Muscle" ,isChecked:false, id:2 },
-    { name: "VC_Fat",isChecked:false, id:3 },
-    { name: "Fat" ,isChecked:false, id:4},
-    { name: "Age",isChecked:false, id:5}
-  ]);
-  const [UDList, setUDList] = React.useState([
-    { name: "Weight",isChecked:true, id:0 },
-    { name: "BMI",isChecked:false, id:1},
-    { name: "Muscle" ,isChecked:false, id:2},
-    { name: "VC_Fat",isChecked:false , id:3},
-    { name: "Fat",isChecked:false , id:4},
-    { name: "Age" ,isChecked:false, id:5}
-  ]);
-  const [value, setValue] = React.useState('English');
+  const [UIList, setUIList] = React.useState(settingsDataReducer.UIList);
+  const [UDList, setUDList] = React.useState(settingsDataReducer.UDList);
+  const [value, setValue] = React.useState(settingsDataReducer.selectedLanguage);
 
   const onChangeUserInput = e => {
     const eleIndex = UIList.findIndex(item=>item.id === e.target.id);
@@ -31,7 +19,6 @@ const Settings = ({ settingsUserData }) => {
     setUIList(newArray)
   };
   const onChangeUserDisplay = e => {
-    console.log('>>>eonChangeUserDisplay', e)
     const eleIndex = UDList.findIndex(item=>item.id === e.target.id);
     let newArray = [...UDList];
     newArray[eleIndex] = {... newArray[eleIndex], isChecked:e.target.checked }
@@ -44,6 +31,9 @@ const Settings = ({ settingsUserData }) => {
   const submitHandler = (evt) => {
     settingsUserData({UIList,UDList, selectedLanguage: value})
   }
+  const cancelHandler = (evt) => {
+    history.push('/dashboard');
+  }
 
   return (
     <>
@@ -54,7 +44,7 @@ const Settings = ({ settingsUserData }) => {
             onChange={onChangeUserInput}
             isChecked={item.isChecked}
             id = {item.id}
-            defaultChecked={item.name === "Weight" ? true : false}>
+            defaultChecked={item.isChecked? true : false}>
             {item.name}
           </Checkbox>
         </div>)
@@ -69,7 +59,7 @@ const Settings = ({ settingsUserData }) => {
             onChange={onChangeUserDisplay}
             isChecked={item.isChecked}
             id = {item.id}
-            defaultChecked={item.name === "Weight" ? true : false}>
+            defaultChecked={item.isChecked? true : false}>
             {item.name}
           </Checkbox>
         </div>)
@@ -85,6 +75,12 @@ const Settings = ({ settingsUserData }) => {
 
       <Button type="primary" htmlType="submit" onClick={submitHandler}>
         Save
+      </Button>
+      <br />
+      <br />
+
+      <Button type="primary" htmlType="submit" onClick={cancelHandler}>
+        Cancel
       </Button>
     </>
   );

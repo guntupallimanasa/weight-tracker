@@ -7,9 +7,21 @@ export const checkLogin = (payload)=>{
 
         dispatch({
 			type: "IS_LOGIN",
+            payload
 		});
     }
 }
+
+export const checkUsername = (payload)=>{
+    return async dispatch => {
+        
+        dispatch({
+			type: "IS_USERNAME",
+            payload
+		});
+    }
+}
+
 
 
 export const settingsUserData = (payload)=>{
@@ -24,7 +36,6 @@ export const settingsUserData = (payload)=>{
 
 export const userInputValues = (payload)=>{
     return async dispatch => {
-        console.log('>>in Actions payload',payload)
         const res = await userenteredValues(payload);
         
         dispatch({

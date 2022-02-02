@@ -5,5 +5,5 @@ export default ({isLogin})=>{
     // if (!isLogin) {
     //     return <Redirect to='/login' exact />
     //   }
-    return <div>Im in Notification.....bvvv....</div>
+    return <div>Im in Notification.........</div>
 }

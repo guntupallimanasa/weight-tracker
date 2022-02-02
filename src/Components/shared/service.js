@@ -17,8 +17,6 @@ export const addUsers =async (payload) => {
 };
 
 export const userenteredValues =async (payload) => {
-    console.log('>>in service payload',payload)
-
     const myData = await fetchCallData('usersData/add', {
         method: 'POST',
         body: JSON.stringify({
