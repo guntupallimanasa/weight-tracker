@@ -1,62 +1,100 @@
 import { Checkbox, Divider } from 'antd';
 import React from "react";
+import { Radio, Button } from 'antd';
+import { settingsUserData } from "../Actions";
+import { connect } from "react-redux";
 
-const CheckboxGroup = Checkbox.Group;
+const Settings = ({ settingsUserData }) => {
 
-const userDisplayplainOptions = ['Weight', 'BMI', 'Muscle', 'Vc Fat', 'Fat', 'Age'];
-const userDisplayDefaultCheckedList = ['Weight'];
+  const [UIList, setUIList] = React.useState([
+    { name: "Weight",isChecked:true, id:0 },
+    { name: "BMI" ,isChecked:false, id:1},
+    { name: "Muscle" ,isChecked:false, id:2 },
+    { name: "VC_Fat",isChecked:false, id:3 },
+    { name: "Fat" ,isChecked:false, id:4},
+    { name: "Age",isChecked:false, id:5}
+  ]);
+  const [UDList, setUDList] = React.useState([
+    { name: "Weight",isChecked:true, id:0 },
+    { name: "BMI",isChecked:false, id:1},
+    { name: "Muscle" ,isChecked:false, id:2},
+    { name: "VC_Fat",isChecked:false , id:3},
+    { name: "Fat",isChecked:false , id:4},
+    { name: "Age" ,isChecked:false, id:5}
+  ]);
+  const [value, setValue] = React.useState('English');
 
-const userInputplainOptions = ['Weight', 'BMI', 'Muscle', 'Vc Fat', 'Fat', 'Age'];
-const userInputDefaultCheckedList = ['Weight'];
-
-export default() => {
-  const [UIcheckedList, UIsetCheckedList] = React.useState(userInputDefaultCheckedList);
-  const [UIindeterminate, UIsetIndeterminate] = React.useState(true);
-  const [UIcheckAll, UIsetCheckAll] = React.useState(false);
-
-  const [UDcheckedList, UDsetCheckedList] = React.useState(userDisplayDefaultCheckedList);
-  const [UDindeterminate, UDsetIndeterminate] = React.useState(true);
-  const [UDcheckAll, UDsetCheckAll] = React.useState(false);
-
-  const onChangeUI = list => {
-    UIsetCheckedList(list);
-    UIsetIndeterminate(!!list.length && list.length < userInputplainOptions.length);
-    UIsetCheckAll(list.length === userInputplainOptions.length);
+  const onChangeUserInput = e => {
+    const eleIndex = UIList.findIndex(item=>item.id === e.target.id);
+    let newArray = [...UIList];
+    newArray[eleIndex] = {... newArray[eleIndex], isChecked:e.target.checked }
+    setUIList(newArray)
+  };
+  const onChangeUserDisplay = e => {
+    console.log('>>>eonChangeUserDisplay', e)
+    const eleIndex = UDList.findIndex(item=>item.id === e.target.id);
+    let newArray = [...UDList];
+    newArray[eleIndex] = {... newArray[eleIndex], isChecked:e.target.checked }
+    setUDList(newArray)
   };
 
-  const onCheckAllChangeUI = e => {
-    UIsetCheckedList(e.target.checked ? userInputplainOptions : []);
-    UIsetIndeterminate(false);
-    UIsetCheckAll(e.target.checked);
+  const onChangeRadioButton = e => {
+    setValue(e.target.value);
   };
-
-  const onChangeUD = list => {
-  UDsetCheckedList(list);
-  UDsetIndeterminate(!!list.length && list.length < userDisplayplainOptions.length);
-  UDsetCheckAll(list.length === userDisplayplainOptions.length);
-};
-
-const onCheckAllChangeUD= e => {
-  UDsetCheckedList(e.target.checked ? userDisplayplainOptions : []);
-  UDsetIndeterminate(false);
-  UDsetCheckAll(e.target.checked);
-};
+  const submitHandler = (evt) => {
+    settingsUserData({UIList,UDList, selectedLanguage: value})
+  }
 
   return (
     <>
-      <Checkbox indeterminate={UIindeterminate} onChange={onCheckAllChangeUI} checked={UIcheckAll}>
-        Check all
-      </Checkbox>
-      <h3>User Input Data</h3>
+      <h2>User Input Data</h2>
+      {
+        UIList.map(item => <div>
+          <Checkbox value={item.name}
+            onChange={onChangeUserInput}
+            isChecked={item.isChecked}
+            id = {item.id}
+            defaultChecked={item.name === "Weight" ? true : false}>
+            {item.name}
+          </Checkbox>
+        </div>)
+      }
+       <br />
+      <br />
       <Divider />
-      <CheckboxGroup options={userInputplainOptions} value={UIcheckedList} onChange={onChangeUI} />
-      <br/>
-      <Checkbox indeterminate={UDindeterminate} onChange={onCheckAllChangeUD} checked={UDcheckAll}>
-        Check all
-      </Checkbox>
-      <h3>User Display Data</h3>
-      <Divider />
-      <CheckboxGroup options={userDisplayplainOptions} value={UDcheckedList} onChange={onChangeUD} />
+      <h2>User Display Data</h2>
+      {
+        UDList.map(item => <div>
+          <Checkbox value={item.name}
+            onChange={onChangeUserDisplay}
+            isChecked={item.isChecked}
+            id = {item.id}
+            defaultChecked={item.name === "Weight" ? true : false}>
+            {item.name}
+          </Checkbox>
+        </div>)
+      }
+       <Divider />
+      <h2>Language</h2>
+      <Radio.Group onChange={onChangeRadioButton} value={value}>
+        <Radio value='English'>English</Radio>
+        <Radio value='Telugu'>Telugu</Radio>
+      </Radio.Group>
+      <br />
+      <br />
+
+      <Button type="primary" htmlType="submit" onClick={submitHandler}>
+        Save
+      </Button>
     </>
   );
-};
+}
+
+const mapStateToProps = state => {
+  return {
+    settingsDataReducer: state.settingsUserDataReducer
+  }
+}
+
+const settingsContainer = connect(mapStateToProps, { settingsUserData })(Settings);
+export default settingsContainer;

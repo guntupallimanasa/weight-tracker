@@ -5,7 +5,7 @@ import '../style.css';
 import { Layout, Menu } from 'antd';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { BrowserRouter as Router, Route, Link, useHistory, NavLink, Redirect } from 'react-router-dom';
-import { Notification, Settings, Login, Profile, LayoutComponent } from ".";
+import { Notification, Settings, Login, Profile, LayoutComponent, Create } from ".";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -19,9 +19,8 @@ export default ({ isLogin }) => {
     { name: 'Profile', to: '/profile', key: '1' },
     { name: 'Dashboard', to: '/dashboard', key: '2' },
     { name: 'Notification', to: '/notifications', key: '3' },
-    { name: 'Settings', to: '/settings', key: '4' },
-    { name: 'Profile', to: '/profile', key: '1' },
-    { name: 'Dashboard', to: '/dashboard', key: '2' },
+    { name: 'Create', to: '/create', key: '4' },
+    { name: 'Settings', to: '/settings', key: '5' },
     
   ]
 
@@ -29,7 +28,8 @@ export default ({ isLogin }) => {
     if (e.key == '1') setSelectedValue('Profile')
     if (e.key == '2') setSelectedValue('Dashboard')
     if (e.key == '3') setSelectedValue('Notification')
-    if (e.key == '4') setSelectedValue('Settings')
+    if (e.key == '4') setSelectedValue('Create')
+    if (e.key == '5') setSelectedValue('Settings')
   }
 
   useEffect(()=>{

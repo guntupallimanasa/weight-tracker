@@ -7,10 +7,9 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import {Dashboard, Notification, Settings, Login, Profile, Home} from "./Components";
+import {Dashboard, Notification, Settings, Login, Profile, Home, Create} from "./Components";
 
 export const Routes=({isLogin})=> {
-  console.log('isLogin in routes>>>>>>>>', isLogin)
   return (
     <Router>
       <div>
@@ -46,6 +45,9 @@ export const Routes=({isLogin})=> {
           </Route>
           <Route path="/settings">
             <Settings isLogin = {isLogin}/>
+          </Route>
+          <Route path="/create">
+            <Create isLogin = {isLogin}/>
           </Route>
           <Route path="/">
             <Login isLogin = {isLogin}/>

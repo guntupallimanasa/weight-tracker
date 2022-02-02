@@ -1,5 +1,5 @@
 import React from "react";
-import { Notification, Settings, Login, Profile, Dashboard } from "../Components";
+import { Notification, Settings, Login, Profile, Dashboard, Create } from "../Components";
 import { Layout, Menu } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -15,6 +15,8 @@ export default ({ val }) => {
             return <Profile />
         } else if (val === 'Dashboard') {
             return <Dashboard />
+        }else if (val === 'Create') {
+            return <Create />
         }
         return "wrong route";
     }

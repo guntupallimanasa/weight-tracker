@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
-import CounterReducer from "./counterReducer";
 import LoginReducer from "./loginReducer";
+import settingsUserDataReducer from "./settingsUserDataReducer";
+import enteredVAluesReducer from "./enteredValuesReducer";
 
 const rootReducer = combineReducers({
-    CounterReducer,
-    LoginReducer
+    LoginReducer,
+    settingsUserDataReducer,
+    enteredVAluesReducer
 });
 
 export default rootReducer;
