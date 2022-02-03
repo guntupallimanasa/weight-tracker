@@ -3,34 +3,44 @@ import { BrowserRouter as Router, Route, Link, useHistory, NavLink, Redirect } f
 import { connect } from "react-redux";
 import './style.css';
 
-const Dashboard = ({ settingsUserDataReducer, enteredVAluesReducer }) => {
-
+const Dashboard = ({ settingsUserDataReducer, enteredVAluesReducer,fetchTimeReducer  }) => {
     return <div>
-        {
-            settingsUserDataReducer.UDList.map(item => <span>
+       
+       <div>
+       <div className="weight-text">Your Current Weight</div>
+        <div className="weight-family">{enteredVAluesReducer.Weight} Kg</div>
+        <div className="weight-time">updated on {fetchTimeReducer}</div>
+       </div>
+       <div className="display-data">
+       {
+            settingsUserDataReducer.UDList.map(item => <>
                 {
-                    item.isChecked ? <span className="display-data">
+                    item.isChecked ? <div>
                         {
-                            Object.keys(enteredVAluesReducer).map((key, i) => <p key={i}>
+                            Object.keys(enteredVAluesReducer).map((key, i) => <div key={i}>
                                 {
-                                    item.name === key ? (<div><span>{item.name} : </span><span>{enteredVAluesReducer[item.name]}</span></div>) : null
+                                    item.name === key ?<div className="items">{item.name} <div>{enteredVAluesReducer[item.name]}</div></div> : null
                                 }
-                            </p>
+                            </div>
                             )
                         }
 
-                    </span>
+                    </div>
                         : null
                 }
-            </span>)
+            </>)
         }
+       </div>
+       
     </div>
 }
 
 const mapStateToProps = state => {
     return {
         settingsUserDataReducer: state.settingsUserDataReducer,
-        enteredVAluesReducer: state.enteredVAluesReducer
+        enteredVAluesReducer: state.enteredVAluesReducer,
+        fetchTimeReducer: state.fetchTimeReducer,
+
     }
 }
 

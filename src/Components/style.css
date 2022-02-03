@@ -1,4 +1,17 @@
 
   .display-data{
-    margin: 10px
+    display: flex;
+  }
+  .items{
+    padding:10px;
+    border-right: 2px solid
+  }
+  .weight-text{
+    font-weight: bold;
+  }
+  .weight-family{
+    font-style: italic;
+  }
+  .weight-time{
+    color:darkgrey
   }

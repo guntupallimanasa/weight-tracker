@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Link, useHistory, NavLink, Redirect } f
 import { Input } from 'antd';
 import { connect } from "react-redux";
 import { Radio, Button } from 'antd';
-import { userInputValues } from '../Actions'
+import { userInputValues, fetchedTime } from '../Actions'
 
-const Create = ({ settingsUserDataReducer, userInputValues, enteredVAluesReducer }) => {
+const Create = ({ settingsUserDataReducer, userInputValues,fetchedTime, enteredVAluesReducer }) => {
   const [initialValue, setInitialValue] = useState(enteredVAluesReducer)
 
   const onChangeHandler = (e) => {
@@ -24,7 +24,9 @@ const Create = ({ settingsUserDataReducer, userInputValues, enteredVAluesReducer
     }
   }
   const submitHandler = (evt) => {
+    let date = new Date().toDateString();
     userInputValues(initialValue)
+    fetchedTime(date)
   }
 
   const cancelHandler = (evt) => {
@@ -78,5 +80,5 @@ const mapStateToProps = state => {
   }
 }
 
-const createContainer = connect(mapStateToProps, { userInputValues })(Create);
+const createContainer = connect(mapStateToProps, { userInputValues, fetchedTime })(Create);
 export default createContainer;

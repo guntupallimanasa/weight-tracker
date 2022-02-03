@@ -22,6 +22,17 @@ export const checkUsername = (payload)=>{
     }
 }
 
+export const fetchedTime = (payload)=>{
+    return async dispatch => {
+        
+        dispatch({
+			type: "FETCH_TIME",
+            payload
+		});
+    }
+}
+
+
 
 
 export const settingsUserData = (payload)=>{
